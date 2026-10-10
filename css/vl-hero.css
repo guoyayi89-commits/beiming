@@ -1,0 +1,98 @@
+/* ===== 首屏：纵深山水 · 顶部标题 · 尖峰扫描框 · 底部导览 ===== */
+/* --u 在 16:10 横屏上等于 1vw；竖屏按高度放大，整组山水以视口中线为准左右居中 */
+.hero {
+  position: relative; height: 100vh; min-height: 560px; overflow: hidden; background: var(--ink);
+  --u: max(1vw, 1.6vh); --x0: calc(50% - 50 * var(--u));
+}
+
+.hl { position: absolute; pointer-events: none; will-change: transform; }
+.hl img { display: block; width: 100%; height: auto; max-width: none; }
+.hl-far  { left: calc(var(--x0) + 23 * var(--u)); top: 19vh; width: calc(80 * var(--u)); }
+.hl-mid  { left: calc(var(--x0) - 23 * var(--u)); top: 33vh; width: calc(122 * var(--u)); }
+.hl-wu   { left: calc(var(--x0) + 55 * var(--u)); top: 37vh; width: calc(50 * var(--u)); }
+.hl-near { left: calc(var(--x0) - 16 * var(--u)); top: 81vh; width: calc(87 * var(--u)); }
+.hl-far img  { opacity: .22; filter: blur(2.5px); }
+.hl-mid img  { opacity: .5; filter: blur(1px); }
+.hl-wu img   { opacity: .82; }
+.hl-near img { opacity: .7; }
+
+/* 雾：灰色横带，不发光 */
+.hl-fog {
+  left: 0; right: 0;
+  background:
+    radial-gradient(42% 50% at 28% 50%, rgba(128,128,124,.42), transparent 72%),
+    radial-gradient(38% 46% at 70% 56%, rgba(128,128,124,.36), transparent 72%),
+    linear-gradient(to bottom, transparent, rgba(110,110,106,.26) 50%, transparent);
+}
+.fog-1 { top: 40vh; height: 22vh; opacity: .5; }
+.fog-2 { top: 63.5vh; height: 27vh; opacity: .62; }
+.hl-shade { left: 0; right: 0; top: 72vh; height: calc(28vh + 2px); background: linear-gradient(to bottom, transparent, #000); opacity: .75; }
+
+/* 扫描框：挂在中景图层里，随中景一起视差；位置按图层自身比例 */
+.hero-scan {
+  position: absolute; left: 51.6%; top: 12.9%; width: 10%; height: 34.7%;
+  border: 1px solid var(--klein-lit); opacity: 0; transition: opacity 1.4s ease .4s;
+}
+.hero-scan.on { opacity: .85; }
+.hero-scan canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-scan-bar {
+  position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: var(--klein-lit); opacity: .45; animation: scanY 7s linear infinite;
+}
+@keyframes scanY { from { top: 0; } to { top: 100%; } }
+
+/* 标题：顶部夜空，主标题 + 一组副标题 */
+.hero-title {
+  position: absolute; z-index: 5; top: 7vh; left: 0; right: 0;
+  margin: 0; text-align: center; font-weight: inherit;
+}
+.hero-title > span { display: block; opacity: 0; transform: translateY(-.3em); animation: rise 1.4s cubic-bezier(.2,.7,.2,1) forwards; }
+.t1 { font: 900 clamp(2.6rem, 5.4vw, 5.2rem)/1.05 var(--serif); letter-spacing: .2em; padding-left: .2em; color: var(--paper); }
+.hero-sub {
+  display: flex !important; justify-content: center; align-items: center; gap: 1.3em;
+  margin-top: 1.2em; animation-delay: .3s !important;
+}
+.t2 { font: 500 clamp(.72rem, .95vw, .88rem)/1 var(--mono); letter-spacing: .5em; margin-right: -.5em; color: var(--klein-lit); }
+.t3 { font: 300 clamp(.95rem, 1.3vw, 1.15rem)/1 var(--serif); letter-spacing: .4em; margin-right: -.4em; color: var(--ash-2); }
+.sub-rule { width: 1px; height: 1em; background: var(--ash); }
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+/* 底部：一行导览 + 入口；压在鲲之上，保证看得清 */
+.hero-foot {
+  position: absolute; z-index: 35; left: 0; right: 0; bottom: 6vh; padding: 0 6vw;
+  display: flex; flex-direction: column; align-items: center; gap: 1.5em; text-align: center;
+}
+.hero-desc { margin: 0; font: 400 clamp(.92rem, 1.15vw, 1.08rem)/1.8 var(--serif); letter-spacing: .08em; color: var(--paper); }
+.scroll-cue {
+  font: 500 .78rem/1 var(--mono); letter-spacing: .4em; color: var(--paper); text-decoration: none;
+  padding: .95em 1.6em .95em 2em; border: 1px solid rgba(241,240,236,.5); background: rgba(11,11,12,.55);
+  transition: border-color .3s, background .3s;
+}
+.scroll-cue:hover, .scroll-cue:focus-visible { border-color: var(--paper); background: rgba(11,11,12,.85); outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scan-bar { display: none; }
+}
+
+/* 线条通用：克莱因蓝细线，无发光 */
+.m-l, .m-d, .m-f, .m-ray, .m-hex, .m-c { fill: none; stroke: var(--klein-lit); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.m-l { opacity: .7; }
+.m-d { opacity: .45; stroke-dasharray: 2 5; }
+.m-f { opacity: .28; }
+.m-ray { opacity: .13; }
+.m-hex { opacity: .85; stroke-width: 1.2; }
+.m-sq { fill: var(--klein-lit); }
+.m-t { font: 400 9.5px/1 var(--mono); letter-spacing: .08em; fill: var(--ash); }
+.m-tk { fill: var(--klein-lit); }
+.m-draw { opacity: 0; transition: opacity 1.8s ease .3s; }
+.in > .m-draw, .in .m-draw { opacity: 1; }
+
+@media (max-width: 860px) {
+  .hero-title { top: 8vh; }
+  .t1 { font-size: clamp(2.4rem, 11vw, 3.6rem); }
+  .hero-sub { gap: .9em; }
+  .t2 { letter-spacing: .32em; margin-right: -.32em; }
+  .t3 { letter-spacing: .24em; margin-right: -.24em; }
+  .hero-foot { bottom: 9vh; gap: 1.1em; }
+  .hero-desc { font-size: .9rem; }
+}

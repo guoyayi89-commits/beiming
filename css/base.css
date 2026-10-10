@@ -1,0 +1,156 @@
+:root {
+  --ink: #0b0b0c;
+  --ink-2: #161618;
+  --ash: #8b8b8b;
+  --ash-2: #c9c9c6;
+  --paper: #f1f0ec;
+  --paper-2: #e7e5df;
+  --klein: #002fa7;
+  --klein-lit: #3d6bff;
+  --zhu: #e0301e;
+  --serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --latin: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --mono: "IBM Plex Mono", "JetBrains Mono", Consolas, "Microsoft YaHei", monospace;
+  --wrap: min(1180px, 88vw);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font: 300 17px/1.95 var(--serif);
+  letter-spacing: .02em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; }
+a { color: inherit; }
+h2, h3 { font-weight: 900; margin: 0; }
+h3 { font-size: 1.6rem; margin-bottom: .8em; letter-spacing: .08em; }
+p { margin: 0 0 1.1em; }
+
+.mono { font-family: var(--mono); letter-spacing: .04em; }
+.latin { font-family: var(--latin); font-style: italic; letter-spacing: .01em; }
+.zhu { color: var(--zhu); font-style: normal; }
+.wrap { width: var(--wrap); margin-inline: auto; }
+.narrow { max-width: 720px; margin-inline: auto; }
+.center { text-align: center; }
+.lead { font-size: 1.18rem; font-weight: 400; }
+.cap { font-size: .78rem; color: var(--ash); margin-top: .8em; }
+
+.dark { background: var(--ink); color: var(--paper); }
+.light { background: var(--paper); color: var(--ink); }
+.light.paper { background: var(--paper-2); }
+
+/* 顶部进度条 */
+.progress { position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 50; }
+.progress i { display: block; height: 100%; width: 0; background: var(--klein-lit); }
+
+/* 左侧章节导航 */
+.chapnav {
+  position: fixed; left: 18px; top: 50%; transform: translateY(-50%);
+  z-index: 40; display: flex; flex-direction: column; gap: 6px;
+  mix-blend-mode: difference; color: #fff;
+}
+.chapnav a {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  font-size: 13px; opacity: .45; transition: opacity .3s;
+}
+.chapnav a b {
+  width: 26px; height: 26px; display: grid; place-items: center;
+  border: 1px solid currentColor; border-radius: 2px; font-weight: 700;
+}
+.chapnav a span { opacity: 0; transform: translateX(-6px); transition: .3s; white-space: nowrap; }
+.chapnav:hover a span, .chapnav a.on span { opacity: 1; transform: none; }
+.chapnav a:hover, .chapnav a.on { opacity: 1; }
+.chapnav a.on b { background: #fff; color: #000; }
+
+/* 章节标题与印章 */
+.chapter { position: relative; padding-bottom: 14vh; }
+.chap-head { display: flex; align-items: center; gap: 22px; padding: 16vh 0 8vh; flex-wrap: wrap; }
+.chap-head h2 { font-size: clamp(2.6rem, 6vw, 5rem); letter-spacing: .18em; line-height: 1.1; }
+.chap-head .en { margin: 0; flex-basis: 100%; padding-left: 84px; font-size: 1.3rem; color: var(--ash); }
+.seal {
+  position: relative; width: 62px; height: 62px; flex: none; display: grid; place-items: center start;
+  color: inherit; font-weight: 300; font-size: 2.9rem; line-height: 1;
+}
+.seal::after {
+  content: ""; position: absolute; right: 0; top: 8%; bottom: 8%; width: 1px;
+  background: currentColor; opacity: .4;
+}
+
+.pull {
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem); font-weight: 700; line-height: 1.5;
+  letter-spacing: .12em; margin-bottom: .8em;
+}
+
+/* 滚动驱动的粘性舞台 */
+.scrolly { position: relative; height: var(--len, 300vh); }
+.sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+
+/* 双栏 */
+.cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6vw; align-items: start; padding-top: 6vh; }
+
+/* 按钮 */
+.btn {
+  display: inline-block; padding: .7em 1.4em; border: 1px solid var(--klein-lit);
+  background: transparent; color: var(--klein-lit); text-decoration: none;
+  font-size: .85rem; letter-spacing: .12em; transition: .25s;
+}
+.btn:hover { background: var(--klein); border-color: var(--klein); color: #fff; }
+.light .btn { color: var(--klein); border-color: var(--klein); }
+.light .btn:hover { color: #fff; }
+.btn.sm { padding: .3em .9em; font-size: .75rem; }
+
+/* 深度思考：机器之声 */
+.think {
+  margin: 2.2em 0 0; padding: 0 0 0 1.1em; border-left: 2px solid var(--klein-lit);
+  font-family: var(--mono); font-size: .86rem; line-height: 1.95; color: #8fa6ff;
+}
+.light .think { color: var(--klein); border-color: var(--klein); }
+.think summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: .6em;
+  font-size: .78rem; letter-spacing: .1em; color: var(--ash); margin-bottom: .8em;
+}
+.think summary::-webkit-details-marker { display: none; }
+.think summary::after { content: "⌄"; margin-left: .2em; transition: transform .3s; }
+.think:not([open]) summary::after { transform: rotate(-90deg); }
+.think-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--klein-lit); flex: none;
+}
+.think.streaming .think-dot { animation: pulse 1s ease-in-out infinite; }
+.think-body p { margin: 0 0 .9em; }
+.think.streaming .think-body p.cur::after {
+  content: ""; display: inline-block; width: .55em; height: 1.05em; margin-left: 2px;
+  vertical-align: -.15em; background: currentColor; animation: blink .8s steps(1) infinite;
+}
+@keyframes pulse { 50% { transform: scale(.5); opacity: .4; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+/* 进场 */
+.rv { opacity: 0; transform: translateY(28px); transition: opacity 1.1s ease, transform 1.1s ease; }
+.rv.in { opacity: 1; transform: none; }
+
+/* 图注 */
+figure { margin: 0; }
+figcaption { font-size: .74rem; color: var(--ash); margin-top: .9em; letter-spacing: .06em; }
+
+@media (max-width: 860px) {
+  body { font-size: 16px; }
+  .chapnav { left: 50%; top: auto; bottom: 12px; transform: translateX(-50%); flex-direction: row; }
+  .chapnav a span { display: none; }
+  .chapnav a b { width: 22px; height: 22px; font-size: 11px; }
+  .cols { grid-template-columns: 1fr; }
+  .chap-head .en { padding-left: 0; }
+  .seal { width: 50px; height: 50px; font-size: 2.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rv { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; }
+}

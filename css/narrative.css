@@ -1,0 +1,63 @@
+/* ===== 鲲：贯穿全展的点阵层 ===== */
+#kunCanvas {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  z-index: 30; pointer-events: none;
+}
+
+/* 每章标题下注明鲲此刻的形态 */
+.kun-form {
+  flex-basis: 100%; margin: .2em 0 0; padding-left: 84px;
+  font: 500 .74rem/1.6 var(--mono); letter-spacing: .3em; color: var(--klein-lit);
+}
+.light .kun-form { color: var(--klein); }
+.kun-form::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: .9em; vertical-align: .15em; background: currentColor; }
+
+/* ===== 满屏转场 ===== */
+.tr { position: relative; height: var(--len, 220vh); background: var(--from); }
+.tr-stage { background: var(--from); }
+.tr-reveal {
+  position: absolute; inset: 0; background: var(--to);
+  clip-path: circle(0 at 50% 50%); overflow: hidden;
+}
+.tr-reveal img {
+  position: absolute; left: 50%; top: 50%; width: 30vmin; height: 30vmin;
+  max-width: none; transform: translate(-50%, -50%); filter: grayscale(1);
+}
+.tr-ring {
+  position: absolute; left: 50%; top: 50%; width: 0; height: 0; border-radius: 50%;
+  transform: translate(-50%, -50%); border: 1px solid var(--klein-lit);
+  opacity: 0; pointer-events: none;
+}
+.tr-cap {
+  position: absolute; left: 0; right: 0; bottom: 14vh; z-index: 2; margin: 0;
+  text-align: center; font-size: clamp(1.1rem, 2vw, 1.55rem); font-weight: 400;
+  letter-spacing: .24em; line-height: 1.8; padding: 0 8vw;
+}
+.tr-cap small {
+  display: block; font: .7rem/2 var(--mono); letter-spacing: .4em; color: var(--ash); margin-bottom: .6em;
+}
+.tr-cap.on-ink { color: var(--paper); }
+.tr-cap.on-paper { color: var(--ink); }
+.tr-post { opacity: 0; }
+
+/* 雕塑长廊顶部给"问号鲲"让位 */
+.gal-title { top: 4vh; }
+
+/* 四 · 须臾的题图与转场衔接 */
+.moment-banner::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 30%; z-index: 1;
+  background: linear-gradient(var(--ink), transparent);
+}
+
+/* 终章：化鹏的舞台与旁白 */
+.peng-stage { display: flex; align-items: flex-end; justify-content: center; }
+.kun-line {
+  font: 500 .8rem/2 var(--mono); letter-spacing: .3em; color: var(--klein);
+  margin: 0 0 12vh; padding: 0 6vw; text-align: center;
+}
+.final { padding-top: 4vh; }
+
+@media (max-width: 860px) {
+  .kun-form { padding-left: 0; }
+  .tr-cap { bottom: 18vh; }
+}

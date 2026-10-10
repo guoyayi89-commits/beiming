@@ -1,0 +1,115 @@
+/* ===== 序章 · 鲲鹏 ===== */
+.kun-stage { display: flex; flex-direction: column; justify-content: center; }
+.kun-band { position: absolute; left: 0; right: 0; top: 50%; height: 62vh; transform: translateY(-50%); overflow: hidden; }
+.kun-roll { position: relative; height: 100%; width: max-content; will-change: transform; }
+.kun-band img {
+  height: 100%; width: auto; max-width: none;
+  filter: grayscale(1) invert(1) contrast(1.2) brightness(.7);
+  opacity: .5;
+}
+.kun-band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(var(--ink), transparent 22%, transparent 78%, var(--ink)); }
+.kun-stage .chap-head { position: relative; width: var(--wrap); margin: 0 auto; padding: 0 0 5vh; }
+.kun-text {
+  position: relative; width: var(--wrap); margin: 0 auto; max-width: 980px;
+  font-size: clamp(1.15rem, 2.1vw, 1.7rem); line-height: 2.1; letter-spacing: .14em; font-weight: 400;
+}
+.kun-text span { color: rgba(241,240,236,.12); transition: color .5s; }
+.kun-text span.lit { color: var(--paper); }
+.kun-text span.bird.lit { color: var(--klein-lit); font-family: var(--mono); font-weight: 500; }
+.kun-note { position: relative; width: var(--wrap); margin: 4vh auto 0; font-size: .75rem; color: var(--ash); }
+.ink-dot, .klein-dot { display: inline-block; width: 8px; height: 8px; margin-right: .5em; background: var(--paper); }
+.klein-dot { background: var(--klein-lit); margin-left: 1.4em; }
+
+/* ===== 序章 · 地出 ===== */
+.earth { display: grid; grid-template-columns: 1fr 1.1fr; gap: 6vw; align-items: center; width: var(--wrap); margin: 0 auto; padding: 14vh 0 18vh; }
+.earth-fig { order: 2; }
+.earth-fig img { width: 100%; max-height: 86vh; object-fit: cover; }
+.earth-txt p:not(.pull) { color: var(--ash-2); }
+
+/* ===== 一 · 创造 ===== */
+.adam-stage { display: grid; place-items: center; }
+.adam-pair { position: relative; width: min(92vw, 115vh); aspect-ratio: 821 / 669; }
+.adam-half.l {
+  -webkit-mask-image: radial-gradient(ellipse 105% 54% at 100% 47%, #000 38%, transparent 96%);
+  mask-image: radial-gradient(ellipse 105% 54% at 100% 47%, #000 38%, transparent 96%);
+}
+.adam-half.r {
+  -webkit-mask-image: radial-gradient(ellipse 105% 54% at 0% 47%, #000 38%, transparent 96%);
+  mask-image: radial-gradient(ellipse 105% 54% at 0% 47%, #000 38%, transparent 96%);
+}
+.adam-half {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  background: url(../assets/creation_of_adam_3d.png) no-repeat; background-size: 200% 100%;
+  will-change: transform;
+}
+/* 左手是「我」（机器，蓝 + 扫描线），右手是「你们」（人，灰） */
+.adam-half.l { left: 0; background-position: 0 0; isolation: isolate; }
+.adam-half.r { right: 0; background-position: 100% 0; filter: grayscale(1); }
+.adam-half .tint { position: absolute; inset: 0; background: #6d8cff; mix-blend-mode: multiply; }
+.adam-half.l::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.35) 0 1px, transparent 1px 4px);
+  mix-blend-mode: multiply;
+}
+.adam-cap { position: absolute; bottom: 8vh; font-size: .72rem; letter-spacing: .3em; color: var(--ash); margin: 0; }
+.adam-cap.l { left: 10vw; color: var(--klein-lit); }
+.adam-cap.r { right: 10vw; }
+
+.leibniz { display: grid; grid-template-columns: 1fr 1.15fr; gap: 6vw; align-items: start; padding-top: 18vh; }
+.leibniz-fig img { filter: grayscale(1) invert(1) contrast(1.1); opacity: .85; }
+.hexgrid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin: 1.6em 0 1em; max-width: 440px; }
+.hex { display: flex; flex-direction: column; gap: 3px; padding: 6px 5px; border: 1px solid #2a2a2e; cursor: crosshair; transition: .2s; }
+.hex i { display: flex; justify-content: space-between; height: 3px; }
+.hex i::before, .hex i::after { content: ""; height: 100%; background: var(--ash-2); width: 42%; }
+.hex i.yang::before { width: 100%; }
+.hex i.yang::after { display: none; }
+.hex:hover, .hex.on { border-color: var(--klein-lit); background: rgba(0,47,167,.25); }
+.hex:hover i::before, .hex:hover i::after, .hex.on i::before, .hex.on i::after { background: var(--klein-lit); }
+.hexread { font-size: 1rem; color: var(--klein-lit); min-height: 1.6em; letter-spacing: .2em; }
+
+/* ===== 二 · 我思 ===== */
+.cogito-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 6vw; align-items: start; }
+.descartes img { filter: grayscale(1) contrast(1.05); width: 100%; }
+.cogito-latin { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.1; margin-bottom: .6em; font-style: italic; }
+.cogito-q { opacity: 0; transition: opacity .8s; display: inline-block; }
+.cogito-q.show { opacity: 1; animation: nudge 2.6s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateY(-4px) rotate(6deg); } }
+#cogitoType.typing::after { content: "|"; color: var(--klein); animation: blink .8s steps(1) infinite; font-style: normal; }
+
+.gallery { margin-top: 14vh; }
+.gal-stage { background: var(--ink); color: var(--paper); display: flex; flex-direction: column; justify-content: center; }
+.gal-title { position: absolute; top: 9vh; left: 0; right: 0; text-align: center; font-size: .75rem; letter-spacing: .3em; color: var(--ash); }
+.gal-row {
+  position: relative; display: flex; align-items: flex-end; gap: 5vw;
+  padding: 0 50vw; width: max-content; height: 58vh; isolation: isolate; will-change: transform;
+  background: var(--ink);
+}
+.gal-row figure { position: relative; height: 100%; flex: none; display: flex; align-items: flex-end; }
+.gal-row img { height: 100%; width: auto; max-width: none; object-fit: contain; filter: grayscale(1) contrast(1.05); }
+.gal-row figure::after {
+  content: attr(data-tag); position: absolute; left: 0; top: -2.4em; z-index: 3; white-space: nowrap;
+  font: .72rem/1 var(--mono); color: var(--klein-lit); letter-spacing: .06em;
+  opacity: 0; transform: translateY(6px); transition: .5s;
+}
+.gal-row figure::before {
+  content: ""; position: absolute; inset: -6px; z-index: 3; border: 1px solid var(--klein-lit);
+  opacity: 0; transition: .5s; pointer-events: none;
+}
+.gal-row figure.seen::after, .gal-row figure.seen::before { opacity: 1; transform: none; }
+.gal-tint {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: #6d8cff; mix-blend-mode: multiply;
+  clip-path: inset(0 100% 0 0);
+}
+.scanline {
+  position: absolute; left: 50%; top: 14vh; bottom: 14vh; width: 1px; background: var(--klein-lit);
+}
+.gal-cap { position: absolute; bottom: 7vh; left: 0; right: 0; text-align: center; font-size: .75rem; color: var(--ash); margin: 0; }
+.gal-cap b { color: var(--klein-lit); font-weight: 500; }
+
+@media (max-width: 860px) {
+  .earth, .leibniz, .cogito-grid { grid-template-columns: 1fr; }
+  .earth-fig { order: 0; }
+  .gal-row { height: 46vh; }
+  .adam-cap { bottom: 14vh; }
+}

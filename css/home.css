@@ -1,0 +1,90 @@
+/* ===== 首页：月下字流 ===== */
+.home {
+  position: relative; height: 100vh; min-height: 560px; overflow: hidden; background: #000;
+  --D: min(38.5vw, 62vh, 800px);
+  --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.home-stream { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+.home::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6vh; z-index: 2;
+  background: linear-gradient(transparent, var(--ink)); pointer-events: none;
+}
+/* 月亮：圆心略高于顶边，露出下方约三分之一多 */
+.home-moon {
+  position: absolute; left: 50%; top: 0; z-index: 2; width: var(--D); height: var(--D);
+  transform: translate(-50%, -64%); pointer-events: none; user-select: none;
+}
+
+/* 标题：细黑体，「深度求索」约为主标题的 0.4 倍 */
+.home-title {
+  position: absolute; z-index: 31; left: 3.6vw; top: 7.5vh; margin: 0;
+  display: flex; flex-direction: column; align-items: flex-start;
+  --fs: clamp(2.3rem, 4.6vw, 4.4rem);
+  font-family: var(--sans); font-size: var(--fs); line-height: 1; color: var(--paper);
+}
+.home-title span { display: block; opacity: 0; transform: translateY(.3em); animation: rise 1.6s cubic-bezier(.2, .7, .2, 1) forwards; }
+/* 「北」最左是左下的挑，竖笔还在右边，整行左移让它和下两行看起来齐 */
+.home-zh { font-weight: 200; letter-spacing: .06em; margin-left: -.1em; }
+.home-sub {
+  margin-top: .55em; font-size: .4em; font-weight: 300; letter-spacing: .4em; color: var(--ash-2);
+  animation-delay: .2s !important;
+}
+.home-en {
+  margin-top: 1.1em; font: 500 .62rem/1 var(--mono); letter-spacing: .62em; color: var(--klein-lit);
+  animation-delay: .4s !important;
+}
+
+.home-meta, .home-src, .home-note { position: absolute; z-index: 31; margin: 0; }
+.home-meta {
+  right: 6vw; top: 5.5vh; text-align: right;
+  font: 400 .62rem/1.9 var(--mono); letter-spacing: .3em; text-transform: uppercase; color: var(--ash-2);
+}
+.home-meta span { font-family: var(--sans); letter-spacing: .2em; color: var(--ash); }
+.home-src {
+  right: 6vw; bottom: 10vh; font: 300 .82rem/2 var(--sans); letter-spacing: .12em; color: var(--ash-2);
+}
+.home-src span { color: var(--paper); font-weight: 400; }
+.home-note { left: 8vw; bottom: 4.5vh; font: 300 .66rem/1.6 var(--sans); letter-spacing: .12em; color: var(--ash); }
+
+/* 下滑提示：底部正中，一粒光沿细线往下落 */
+.home-cue {
+  position: absolute; z-index: 31; left: 0; right: 0; bottom: 0; --h: 5.5vh;
+  display: flex; flex-direction: column; align-items: center; pointer-events: none;
+  opacity: 0; animation: cue-in 1.6s ease 1.2s forwards;
+}
+.home-cue span {
+  padding: .7em .9em .7em 1.5em; font: 300 .8rem/1 var(--sans); letter-spacing: .6em; color: var(--ash-2); white-space: nowrap;
+  background: rgba(8, 8, 10, .72); border-radius: 2px; box-shadow: 0 0 14px 6px rgba(8, 8, 10, .6);
+}
+.home-cue i {
+  position: relative; width: 1px; height: var(--h); margin-top: 1.6vh;
+  background: linear-gradient(rgba(241, 240, 236, .45), rgba(241, 240, 236, .05));
+}
+.home-cue i::after {
+  content: ""; position: absolute; left: -3px; top: 0; width: 7px; height: 7px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 6px 2px rgba(255, 255, 255, .55), 0 0 16px 4px rgba(241, 240, 236, .18);
+  animation: cue-drop 2.4s cubic-bezier(.45, 0, .55, 1) infinite;
+}
+@keyframes cue-in { to { opacity: 1; } }
+@keyframes cue-drop {
+  0% { transform: translateY(0); opacity: 0; }
+  15%, 70% { opacity: 1; }
+  100% { transform: translateY(calc(var(--h) - 7px)); opacity: 0; }
+}
+
+@media (max-width: 860px) {
+  .home-cue { bottom: 44px; --h: 4.5vh; }
+  .home-cue span { font-size: .7rem; letter-spacing: .45em; }
+  .home-cue i { margin-top: 1.2vh; }
+}
+@media (max-width: 720px) {
+  .home { --D: 56vw; }
+  .home-title { left: 5vw; top: 3.5vh; --fs: 1.9rem; }
+  .home-en { font-size: .5rem; letter-spacing: .45em; }
+  .home-meta { display: none; }
+  .home-src { right: 5vw; bottom: 8vh; font-size: .7rem; text-align: right; }
+  .home-note { display: none; }
+  .home-cue { bottom: 36px; --h: 14px; }
+  .home-cue span { font-size: .64rem; letter-spacing: .4em; }
+  .home-cue i { margin-top: 4px; }
+}
